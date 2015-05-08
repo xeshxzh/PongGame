@@ -18,6 +18,7 @@ void draw() {
   ellipse(centerX, centerY, diameter, diameter);
 }
 
+// Determine whether the ball needs to change direction before moving the ball
 void adjustMovingDirection() {
   if (isTouchingVerticalWall()) {
     bounceVerticalWall();
