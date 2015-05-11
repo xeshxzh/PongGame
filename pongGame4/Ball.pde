@@ -31,25 +31,21 @@ class Ball {
   // Determine whether the ball needs to change direction before moving the ball
   void adjustMovingDirection(Paddle lp, Paddle rp) {
     if (isTouchingLeftPaddle(lp)) {
-      println("isTouchingLeftPaddle");
       bouncePaddleY(lp);
       if (xSpeed <0) {
         xSpeed = -xSpeed;
       }
     }
     else if (isTouchingRightPaddle(rp)) {
-      println("isTouchingRightPaddle");
       bouncePaddleY(rp);
       if (xSpeed > 0) {
         xSpeed = -xSpeed;
       }
     }
     else if (isTouchingVerticalWall()) {
-      println("isTouchingVerticalWall");
       bounceVerticalWall();
     }
     else if (isTouchingHorizontalWall()){
-      println("isTouchingHorizontalWall");
       bounceHorizontalWall();
     }
   }
@@ -90,7 +86,7 @@ class Ball {
         currentDirection = 0;
       }
       else {
-        currentDirection = offsetFromMiddle/abs(offsetFromMiddle);
+        currentDirection = -offsetFromMiddle/abs(offsetFromMiddle);
       } 
     }
     else {
@@ -108,6 +104,7 @@ class Ball {
   // Change the y speed of the ball to bounce on horizontal wall
   void bounceHorizontalWall() {
     ySpeed = -ySpeed;
+    centerY += ySpeed;
   }
   
   // Move the ball by the current speed
