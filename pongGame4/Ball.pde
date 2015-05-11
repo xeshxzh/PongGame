@@ -17,8 +17,8 @@ class Ball {
   }
   
   // Main function of the ball
-  void action() {
-    adjustMovingDirection();
+  void action(Paddle lp, Paddle rp) {
+    adjustMovingDirection(lp,rp);
     moveBall();
     drawBall();
   }
@@ -29,15 +29,44 @@ class Ball {
   }
   
   // Determine whether the ball needs to change direction before moving the ball
-  void adjustMovingDirection() {
-    if (isTouchingVerticalWall()) {
-      bouncePaddle();
+  void adjustMovingDirection(Paddle lp, Paddle rp) {
+    if (isTouchingLeftPaddle(lp)) {
+      println("isTouchingLeftPaddle");
+      bouncePaddleY(lp);
+      if (xSpeed <0) {
+        xSpeed = -xSpeed;
+      }
     }
-    if (isTouchingHorizontalWall()){
+    else if (isTouchingRightPaddle(rp)) {
+      println("isTouchingRightPaddle");
+      bouncePaddleY(rp);
+      if (xSpeed > 0) {
+        xSpeed = -xSpeed;
+      }
+    }
+    else if (isTouchingVerticalWall()) {
+      println("isTouchingVerticalWall");
+      bounceVerticalWall();
+    }
+    else if (isTouchingHorizontalWall()){
+      println("isTouchingHorizontalWall");
       bounceHorizontalWall();
     }
   }
   
+  boolean isTouchingLeftPaddle (Paddle lp) {
+    boolean isTouchingLeft = (centerX < lp.pWidth + diameter/2 && 
+                              centerY < lp.centerY+lp.pLength/2 && 
+                              centerY > lp.centerY-lp.pLength/2);
+    return isTouchingLeft;
+  }
+  
+  boolean isTouchingRightPaddle (Paddle rp) {
+    boolean isTouchingRight = (centerX > width - rp.pWidth - diameter/2 && 
+                              centerY < rp.centerY+rp.pLength/2 && 
+                              centerY > rp.centerY-rp.pLength/2);
+    return isTouchingRight;
+  }
   // Determines whether the ball is touching left and right walls of the canvas
   boolean isTouchingVerticalWall() {
     boolean isTouchingLeft = centerX < diameter/2;
@@ -53,14 +82,23 @@ class Ball {
   }
   
   // Change the direction of the ball based on the position it hits the paddle
-  void bouncePaddle () {
-    int offsetFromMiddle = abs(centerY - height/2);
-    int currentDirection = (ySpeed==0)? 0 : ySpeed / abs(ySpeed);
-    int nextDirection = -currentDirection;
-    int nextAbsoluteSpeed = maxYSpeed * offsetFromMiddle/ ( height/2 );
+  void bouncePaddleY (Paddle p) {
+    int offsetFromMiddle = p.centerY - centerY;
+    int currentDirection;
+    if (ySpeed==0){
+      if (offsetFromMiddle == 0) {
+        currentDirection = 0;
+      }
+      else {
+        currentDirection = offsetFromMiddle/abs(offsetFromMiddle);
+      } 
+    }
+    else {
+      currentDirection = ySpeed / abs(ySpeed);
+    }
+    int nextAbsoluteSpeed = maxYSpeed * abs(offsetFromMiddle)/ ( p.pLength/2 );
     
-    ySpeed = nextDirection * nextAbsoluteSpeed;
-    xSpeed = -xSpeed;
+    ySpeed = currentDirection * nextAbsoluteSpeed;
   }
   
   // Change the x speed of the ball to bounce on vertical wall

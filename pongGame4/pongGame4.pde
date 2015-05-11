@@ -11,7 +11,7 @@ boolean keyDown;
 void setup() {
   size(640, 360);
   int diameter = 55;
-  int centerX = diameter/2;
+  int centerX = width/2;
   int centerY = height/2;
   int xSpeed = 5;
   int ySpeed = 5;
@@ -33,7 +33,7 @@ void setup() {
 // The main loop that will be run 
 void draw() {
   background(209);
-  //ball.action();
+  ball.action(leftPaddle, rightPaddle);
   leftPaddle.drawPaddle();
   rightPaddle.drawPaddle();
   checkKeyInput();
