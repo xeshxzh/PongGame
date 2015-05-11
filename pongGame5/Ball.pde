@@ -127,6 +127,7 @@ class Ball {
   // Change the y speed of the ball to bounce on horizontal wall
   void bounceHorizontalWall() {
     ySpeed = -ySpeed;
+    centerY += ySpeed;
   }
   
   // Move the ball by the current speed
