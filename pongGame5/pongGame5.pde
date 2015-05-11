@@ -19,7 +19,6 @@ void setup() {
   int ySpeed = 2;
   int maxYSpeed = 3;
   int maxScore = 5;
-  
   ball = new Ball (diameter, centerX, centerY, xSpeed, ySpeed, maxYSpeed, maxScore);
   
   int pLength = height/2;
@@ -52,10 +51,13 @@ void draw() {
   }
 }
 
+// Show Game Over Message
 void showGameOver() {
   text("Game Over!", width/2, height/2);
   text("Press space to restart...", width/2, height * 2/3);
 }
+
+// Show the current score
 void showScore() {
   textAlign(CENTER, BOTTOM);
   textSize(height/10);

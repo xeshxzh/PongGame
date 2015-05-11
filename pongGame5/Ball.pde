@@ -27,6 +27,7 @@ class Ball {
     rightScore = 0;
   }
   
+  // Determines whether the game is over
   boolean gameOver() {
     return leftScore >= maxScore || rightScore >= maxScore;
   }
@@ -64,6 +65,7 @@ class Ball {
     }
   }
   
+  // Determines whether the ball touches the left paddle
   boolean isTouchingLeftPaddle (Paddle lp) {
     boolean isTouchingLeft = (centerX < lp.pWidth + diameter/2 && 
                               centerY < lp.centerY+lp.pLength/2 && 
@@ -71,6 +73,7 @@ class Ball {
     return isTouchingLeft;
   }
   
+  // Determines whether the ball touches the right paddle
   boolean isTouchingRightPaddle (Paddle rp) {
     boolean isTouchingRight = (centerX > width - rp.pWidth - diameter/2 && 
                               centerY < rp.centerY+rp.pLength/2 && 
@@ -103,21 +106,21 @@ class Ball {
   // Change the direction of the ball based on the position it hits the paddle
   void bouncePaddleY (Paddle p) {
     int offsetFromMiddle = p.centerY - centerY;
-    int currentDirection;
+    int nextDirection;
     if (ySpeed==0){
       if (offsetFromMiddle == 0) {
-        currentDirection = 0;
+        nextDirection = 0;
       }
       else {
-        currentDirection = -offsetFromMiddle/abs(offsetFromMiddle);
+        nextDirection = -offsetFromMiddle/abs(offsetFromMiddle);
       } 
     }
     else {
-      currentDirection = ySpeed / abs(ySpeed);
+      nextDirection = ySpeed / abs(ySpeed);
     }
     int nextAbsoluteSpeed = maxYSpeed * abs(offsetFromMiddle)/ ( p.pLength/2 );
     
-    ySpeed = currentDirection * nextAbsoluteSpeed;
+    ySpeed = nextDirection * nextAbsoluteSpeed;
   }
   
   // Change the x speed of the ball to bounce on vertical wall
