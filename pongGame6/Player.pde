@@ -19,6 +19,7 @@ class Player {
     }
   }
   
+  // Determine if the ball is coming towards the paddle
   boolean isBallComing() {
     return ball.xSpeed < 0;
   }
@@ -27,7 +28,5 @@ class Player {
   int yLandingPoint () {
     int yLandingPoint = ball.centerY - ball.centerX* ball.ySpeed/ball.xSpeed;
     return yLandingPoint;
-  }
-  
-  
+  }  
 }
