@@ -47,11 +47,21 @@ boolean isTouchingHorizontalWall() {
 // Change the direction of the ball based on the position it hits the paddle
 void bouncePaddle () {
   int offsetFromMiddle = abs(centerY - height/2);
-  int currentDirection = (ySpeed==0)? 0 : ySpeed / abs(ySpeed);
-  int nextDirection = -currentDirection;
+  int currentDirection;
+  if (ySpeed==0) {
+    if (offsetFromMiddle == 0) {
+      currentDirection = 0;
+    }
+    else {
+     currentDirection = -offsetFromMiddle/abs(offsetFromMiddle);
+   }
+  }
+  else {
+    currentDirection = ySpeed / abs(ySpeed);
+  }
   int nextAbsoluteSpeed = maxYSpeed * offsetFromMiddle/ ( height/2 );
   
-  ySpeed = nextDirection * nextAbsoluteSpeed;
+  ySpeed = currentDirection * nextAbsoluteSpeed;
   xSpeed = -xSpeed;
 }
 
